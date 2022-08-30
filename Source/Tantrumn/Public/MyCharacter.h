@@ -19,13 +19,20 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere);
+		class UHealthComponent* HealthComponent;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void Jump();
-	void MoveForward(float amount);
-	void MoveRight(float amount);
+
+	UFUNCTION(BlueprintCallable)
+		const bool IsAlive() const;
+
+	UFUNCTION(BlueprintCallable)
+		const float GetCurrentHealth() const;
 
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

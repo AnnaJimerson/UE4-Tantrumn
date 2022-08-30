@@ -2,12 +2,15 @@
 
 
 #include "MyCharacter.h"
+#include "HealthComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 
 }
 
@@ -31,16 +34,19 @@ void AMyCharacter::Jump()
 	Super::Jump();
 }
 
-void AMyCharacter::MoveForward(float amount)
+const bool AMyCharacter::IsAlive() const
 {
-	// Move Forward Back
-	AddMovementInput(GetActorForwardVector(), amount, false);
+	if (HealthComponent) {
+		return !HealthComponent->IsDead();
+	}
+	return false;
 }
 
-void AMyCharacter::MoveRight(float amount)
+const float AMyCharacter::GetCurrentHealth() const
 {
-	// Move Right Left
-	AddMovementInput(GetActorRightVector(), amount, false);
+	if (HealthComponent) {
+		return HealthComponent->GetCurrentHealth();
+	}
+	return 0.f;
 }
-
 

@@ -38,16 +38,16 @@ void AMyPlayerController::InputJump()
 
 void AMyPlayerController::InputMoveForward(float amount)
 {
-	// Tell player to move forward
-	if(OwnerPlayer)
-		OwnerPlayer->MoveForward(amount);
+	// Move Forward Back
+	if (OwnerPlayer)
+		OwnerPlayer->AddMovementInput(OwnerPlayer->GetActorForwardVector(), amount, false);
 }
 
 void AMyPlayerController::InputMoveRight(float amount)
 {
-	// Tell player to move right
+	// Move Right Left
 	if (OwnerPlayer)
-		OwnerPlayer->MoveRight(amount);
+		OwnerPlayer->AddMovementInput(OwnerPlayer->GetActorRightVector(), amount, false);
 }
 
 void AMyPlayerController::InputLookUp(float amount)
