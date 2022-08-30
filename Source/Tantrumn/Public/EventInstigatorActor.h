@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void TriggerActorTargets();
 
+	UFUNCTION(BlueprintCallable)
+		void UndoTriggerTargets();
+
 	UPROPERTY(BlueprintReadWrite)
 		bool Triggered;
 
