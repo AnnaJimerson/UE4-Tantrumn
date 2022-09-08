@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "HealthComponent.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
@@ -33,6 +34,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		const float GetCurrentHealth() const;
+
+	UFUNCTION(BlueprintCallable)
+		class UHealthComponent* GetHealthComponent() { return HealthComponent; }
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void OnDamageTaken();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void OnDead();
 
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDamagedDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeadDelegate);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANTRUMN_API UHealthComponent : public UActorComponent
@@ -13,11 +15,22 @@ class TANTRUMN_API UHealthComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+	FDamagedDelegate OnDamaged;
+	FDeadDelegate OnDead;
+
 	// Sets default values for this component's properties
 	UHealthComponent();
-
-	void TakeDamage(float Damage) { CurrentHealth -= Damage; }
 	bool IsDead() { return CurrentHealth <= FLT_EPSILON; }
+
+	void TakeDamage(float Damage) {
+		CurrentHealth -= Damage;
+		OnDamaged.Broadcast();
+
+		if (IsDead()) {
+			OnDead.Broadcast();
+		}
+	}
+
 	const float GetCurrentHealth() const { return CurrentHealth; }
 
 protected:
@@ -32,6 +45,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
 };

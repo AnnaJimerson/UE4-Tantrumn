@@ -2,7 +2,6 @@
 
 
 #include "MyCharacter.h"
-#include "HealthComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -12,6 +11,8 @@ AMyCharacter::AMyCharacter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 
+	HealthComponent->OnDamaged.AddDynamic(this, &AMyCharacter::OnDamageTaken);
+	HealthComponent->OnDead.AddDynamic(this, &AMyCharacter::OnDead);
 }
 
 // Called when the game starts or when spawned
